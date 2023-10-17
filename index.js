@@ -2,6 +2,9 @@
 require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
+const mongoose = require("mongoose");
+mongoose.set("strictQuery", false);
+mongoose.connect(process.env.MONGODB_URI);
 
 const app = express();
 app.use(express.json());
@@ -12,6 +15,9 @@ app.get("/", (req, res) => {
   res.json("Bienvenue sur l'API");
   // res.status(300).json({ message: "Bienvenue sur l'API" });
 });
+
+// app.use("/api/movies", require("../server/routes/Movies.Routes"));
+app.use("/api/auth", require("./server/routes/Auth.Routes"));
 
 // ROUTES UNDEFINED
 app.all("*", (req, res) => {
